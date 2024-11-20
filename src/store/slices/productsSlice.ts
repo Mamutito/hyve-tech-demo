@@ -1,12 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-}
+import { Product } from "../../types";
+import PRODUCTS from "../../mocks/products";
 
 interface ProductsState {
   items: Product[];
@@ -23,67 +17,10 @@ const initialState: ProductsState = {
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    // En una aplicación real, esto sería una llamada a la API
+    // In a real application, this would be an API call
     const response = await new Promise<Product[]>((resolve) => {
       setTimeout(() => {
-        resolve([
-          {
-            id: 1,
-            name: "Lyng Table",
-            price: 100.0,
-            image: "https://via.placeholder.com/200",
-            category: "new",
-          },
-          {
-            id: 2,
-            name: "Eira Chair",
-            price: 75.0,
-            image: "https://via.placeholder.com/200",
-            category: "trendy",
-          },
-          {
-            id: 3,
-            name: "Stil Chair",
-            price: 75.0,
-            image: "https://via.placeholder.com/200",
-            category: "new",
-          },
-          {
-            id: 4,
-            name: "Lyske Sofa",
-            price: 395.0,
-            image: "https://via.placeholder.com/200",
-            category: "trendy",
-          },
-          {
-            id: 5,
-            name: "Skag Sofa",
-            price: 245.0,
-            image: "https://via.placeholder.com/200",
-            category: "sale",
-          },
-          {
-            id: 6,
-            name: "Lumi Table",
-            price: 75.0,
-            image: "https://via.placeholder.com/200",
-            category: "new",
-          },
-          {
-            id: 7,
-            name: "Viter Sofa",
-            price: 75.0,
-            image: "https://via.placeholder.com/200",
-            category: "sale",
-          },
-          {
-            id: 8,
-            name: "Klara Chair",
-            price: 395.0,
-            image: "https://via.placeholder.com/200",
-            category: "trendy",
-          },
-        ]);
+        resolve(PRODUCTS);
       }, 1000);
     });
     return response;

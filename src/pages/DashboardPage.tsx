@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/Button";
-export default function Dashboard() {
+export default function DashboardPage() {
   const navigate = useNavigate();
 
   return (
