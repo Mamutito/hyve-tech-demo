@@ -32,6 +32,7 @@ export default function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
           <h2 className="text-xl font-semibold">Shopping Cart</h2>
           <button
             onClick={onClose}
+            data-testid="close-button"
             className="text-gray-500 hover:text-gray-700"
           >
             <X className="h-5 w-5" />
@@ -57,6 +58,7 @@ export default function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
                     variant="outline"
                     size="icon"
                     className="h-8 w-8"
+                    data-testid="minus-button"
                     onClick={() => {
                       if (item.quantity > 1) {
                         dispatch(
@@ -75,6 +77,7 @@ export default function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
                     variant="outline"
                     size="icon"
                     className="h-8 w-8"
+                    data-testid="plus-button"
                     onClick={() => {
                       dispatch(
                         updateQuantity({
@@ -91,6 +94,7 @@ export default function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
               <Button
                 variant="ghost"
                 size="icon"
+                data-testid="remove-button"
                 className="text-red-500 hover:text-red-700"
                 onClick={() => dispatch(removeFromCart(item.id))}
               >
