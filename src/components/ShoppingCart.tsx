@@ -25,7 +25,7 @@ export default function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
   );
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-start justify-end">
+    <div className="fixed inset-0 bg-black/50 flex items-start justify-end z-10">
       <div className="bg-white w-full max-w-md h-screen flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b">

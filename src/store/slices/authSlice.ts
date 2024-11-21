@@ -14,7 +14,9 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: null,
+  user: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null,
   token: localStorage.getItem("token"),
   isAuthenticated: !!localStorage.getItem("token"),
   status: "idle",
@@ -50,6 +52,7 @@ export const loginUser = createAsyncThunk(
 
     // Store token in localStorage
     localStorage.setItem("token", response.token);
+    localStorage.setItem("user", JSON.stringify(response.user));
     return response;
   }
 );
