@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { fetchProducts } from "../store/slices/productsSlice";
-import { Header } from "../components/Header";
 import { HeroSection } from "../components/HeroSection";
 import { ProductSection } from "../components/ProductSection";
 
