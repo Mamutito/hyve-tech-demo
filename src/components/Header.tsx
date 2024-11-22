@@ -13,11 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "../ui/DropdownMenu";
 import { logoutUser } from "../store/slices/authSlice";
-
+import { useLocation } from "react-router-dom";
 export function Header() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+  const isDashboardRoute = location.pathname.startsWith("/dashboard");
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const { user, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
@@ -36,20 +38,22 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <h1 className="text-xl font-bold text-gray-900">LumiHaus.</h1>
-            <nav className="hidden md:flex space-x-8">
-              <Link to="/" className="text-primary font-bold">
-                Home
-              </Link>
-              <Link to="/" className="text-gray-900">
-                Shop
-              </Link>
-              <Link to="/" className="text-gray-900">
-                About
-              </Link>
-              <Link to="/" className="text-gray-900">
-                Contact
-              </Link>
-            </nav>
+            {!isDashboardRoute && (
+              <nav className="hidden md:flex space-x-8">
+                <Link to="/" className="text-primary font-bold">
+                  Home
+                </Link>
+                <Link to="/" className="text-gray-900">
+                  Shop
+                </Link>
+                <Link to="/" className="text-gray-900">
+                  About
+                </Link>
+                <Link to="/" className="text-gray-900">
+                  Contact
+                </Link>
+              </nav>
+            )}
             <div className="flex items-center space-x-4">
               {isAuthenticated ? (
                 <DropdownMenu>
@@ -68,7 +72,9 @@ export function Header() {
                       Signed in as {user?.name}
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <Link to="/dashboard">Dashboard</Link>
+                      <Link to="/dashboard" className="w-full">
+                        Dashboard
+                      </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleLogout}>
                       <LogOut className="mr-2 h-4 w-4" />
@@ -86,20 +92,22 @@ export function Header() {
                   <UserIcon className="h-5 w-5" />
                 </Button>
               )}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative"
-                data-testid="cart-icon-button"
-                onClick={() => setIsCartOpen(true)}
-              >
-                <ShoppingCartIcon className="h-5 w-5" />
-                {cartItemsCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#419DB4] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartItemsCount}
-                  </span>
-                )}
-              </Button>
+              {!isDashboardRoute && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative"
+                  data-testid="cart-icon-button"
+                  onClick={() => setIsCartOpen(true)}
+                >
+                  <ShoppingCartIcon className="h-5 w-5" />
+                  {cartItemsCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-[#419DB4] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {cartItemsCount}
+                    </span>
+                  )}
+                </Button>
+              )}
             </div>
           </div>
         </div>

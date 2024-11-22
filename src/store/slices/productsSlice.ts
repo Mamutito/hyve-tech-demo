@@ -27,6 +27,40 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+export const addProduct = createAsyncThunk(
+  "products/addProduct",
+  async (product: Omit<Product, "id">) => {
+    // Simulate API call
+    const response = await new Promise<Product>((resolve) => {
+      setTimeout(() => {
+        resolve({
+          ...product,
+          id: Math.floor(Math.random() * 10000),
+        });
+      }, 1000);
+    });
+    return response;
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  "products/updateProduct",
+  async (product: Product) => {
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return product;
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  "products/deleteProduct",
+  async (id: number) => {
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return id;
+  }
+);
+
 const productsSlice = createSlice({
   name: "products",
   initialState,
@@ -46,6 +80,20 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch products";
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        state.items.push(action.payload);
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.items = state.items.filter((item) => item.id !== action.payload);
       });
   },
 });
